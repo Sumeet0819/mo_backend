@@ -9,7 +9,8 @@ export interface YtDlpOptions {
   onProgress?: (progress: number) => void;
 }
 
-const ytDlpPath = path.resolve(process.cwd(), 'yt-dlp.exe');
+const binaryName = process.platform === 'win32' ? 'yt-dlp.exe' : 'yt-dlp';
+const ytDlpPath = path.resolve(process.cwd(), binaryName);
 
 export const runYtDlp = (args: string[], options?: YtDlpOptions): Promise<string> => {
   return new Promise((resolve, reject) => {
