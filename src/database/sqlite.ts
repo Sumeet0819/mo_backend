@@ -1,11 +1,8 @@
 import sqlite3 from 'sqlite3';
 import { env } from '../config/env';
+import { logger } from '../utils/logger';
 import fs from 'fs';
 import path from 'path';
-import pino from 'pino';
-
-const logger = pino();
-
 const dbPath = path.resolve(process.cwd(), 'queue.sqlite');
 
 export const db = new sqlite3.Database(dbPath, (err) => {

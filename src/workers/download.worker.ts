@@ -3,12 +3,10 @@ import { runYtDlp } from '../utils/ytdlp';
 import { env } from '../config/env';
 import { activeDownloads } from '../services/download.service';
 import { supabase } from '../database/supabase';
-import pino from 'pino';
 import path from 'path';
 import fs from 'fs';
 import ffmpeg from 'fluent-ffmpeg';
-
-const logger = pino();
+import { logger } from '../utils/logger';
 
 export class DownloadWorker {
   private isProcessing = false;

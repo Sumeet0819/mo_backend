@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { DownloadService } from '../services/download.service';
+import { logger } from "../utils/logger";
 
 export const enqueueDownload = async (req: Request, res: Response) => {
   const { videoId } = req.body;

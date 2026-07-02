@@ -1,7 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import pino from 'pino';
-
-const logger = pino();
+import { logger } from '../utils/logger';
 
 export const requestLogger = (req: Request, res: Response, next: NextFunction) => {
   const start = Date.now();

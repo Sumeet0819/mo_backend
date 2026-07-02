@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { LibraryService } from '../services/library.service';
+import { logger } from "../utils/logger";
 
 export const getSongs = async (req: Request, res: Response) => {
   try {

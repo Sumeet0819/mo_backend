@@ -1,8 +1,6 @@
 import { runYtDlp } from '../utils/ytdlp';
 import { searchCache } from '../cache';
-import pino from 'pino';
-
-const logger = pino();
+import { logger } from "../utils/logger";
 
 export class SearchService {
   static async search(query: string, limit: number = 20) {

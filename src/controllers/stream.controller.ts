@@ -1,10 +1,7 @@
 import { Request, Response } from 'express';
 import { StreamService } from '../services/stream.service';
 import axios from 'axios';
-import pino from 'pino';
-
-const logger = pino();
-
+import { logger } from "../utils/logger";
 export const streamAudio = async (req: Request, res: Response) => {
   const videoId = req.params.videoId as string;
   let retries = 1;

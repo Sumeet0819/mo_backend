@@ -1,0 +1,15 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const library_controller_1 = require("../controllers/library.controller");
+const router = (0, express_1.Router)();
+router.get('/songs', library_controller_1.getSongs);
+router.get('/history', library_controller_1.getHistory);
+router.post('/history', library_controller_1.recordHistory);
+router.get('/favorites', library_controller_1.getFavorites);
+router.post('/favorites', library_controller_1.addFavorite);
+router.delete('/favorites/:songId', library_controller_1.removeFavorite);
+router.get('/playlists', library_controller_1.getPlaylists);
+router.post('/playlists', library_controller_1.createPlaylist);
+router.post('/playlists/:playlistId/songs', library_controller_1.addSongToPlaylist);
+exports.default = router;

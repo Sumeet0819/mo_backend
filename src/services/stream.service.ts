@@ -1,8 +1,6 @@
 import { runYtDlp } from '../utils/ytdlp';
 import { streamUrlCache } from '../cache';
-import pino from 'pino';
-
-const logger = pino();
+import { logger } from "../utils/logger";
 
 export class StreamService {
   static async getStreamUrl(videoId: string): Promise<string> {
@@ -29,6 +27,7 @@ export class StreamService {
     }
   }
   static invalidateStreamUrl(videoId: string) {
+      logger.info(`[${'StreamService'}.${'invalidateStreamUrl'}] called`);
     streamUrlCache.delete(videoId);
   }
 }

@@ -1,7 +1,5 @@
 import { supabase } from '../database/supabase';
-import pino from 'pino';
-
-const logger = pino();
+import { logger } from "../utils/logger";
 
 export class LibraryService {
   static async getSongs() {

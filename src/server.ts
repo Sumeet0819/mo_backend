@@ -1,15 +1,7 @@
 import app from './app';
 import { env } from './config/env';
+import { logger } from './utils/logger';
 import { DownloadWorker } from './workers/download.worker';
-import pino from 'pino';
-
-const logger = pino({
-  transport: {
-    target: 'pino-pretty',
-    options: { colorize: true }
-  }
-});
-
 const PORT = env.PORT;
 
 app.listen(PORT, () => {

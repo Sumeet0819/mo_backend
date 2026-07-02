@@ -1,8 +1,6 @@
 import { spawn } from 'child_process';
-import pino from 'pino';
 import path from 'path';
-
-const logger = pino();
+import { logger } from "./logger";
 
 export interface YtDlpOptions {
   signal?: AbortSignal;

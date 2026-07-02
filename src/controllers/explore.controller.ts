@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { ExploreService } from '../services/explore.service';
+import { logger } from "../utils/logger";
 
 export const getTrending = async (req: Request, res: Response) => {
   const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : 20;

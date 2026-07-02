@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { SearchService } from '../services/search.service';
+import { logger } from "../utils/logger";
 
 export const search = async (req: Request, res: Response) => {
   const query = req.query.q as string;

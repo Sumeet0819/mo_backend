@@ -5,6 +5,7 @@ import searchRoutes from './routes/search.routes';
 import streamRoutes from './routes/stream.routes';
 import downloadRoutes from './routes/download.routes';
 import libraryRoutes from './routes/library.routes';
+import youtubeRoutes from './routes/youtube.routes';
 import { requestLogger } from './middleware/logger.middleware';
 
 import exploreRoutes from './routes/explore.routes';
@@ -24,6 +25,7 @@ app.use('/api/v1/explore', exploreRoutes);
 app.use('/api/v1/stream', streamRoutes);
 app.use('/api/v1/downloads', downloadRoutes);
 app.use('/api/v1/library', libraryRoutes);
+app.use('/api/v1/youtube', youtubeRoutes);
 
 // Error Handling (basic)
 app.use((req, res) => {
