@@ -23,6 +23,10 @@ class StreamService {
                 // Fallback attempt without any format selector, allowing yt-dlp to pick the default available format
                 url = await (0, ytdlp_1.runYtDlp)(['-g', videoId]);
             }
+            // yt-dlp might return multiple URLs (e.g., video and audio separately).
+            // We take the last one, which is typically the audio stream if they are separated.
+            const urls = url.split('\n').map(u => u.trim()).filter(u => u.length > 0);
+            url = urls[urls.length - 1];
             if (!url || !url.startsWith('http')) {
                 throw new Error('Invalid URL returned from yt-dlp');
             }
