@@ -23,4 +23,12 @@ npm rebuild sqlite3 --build-from-source
 echo ">>> Building TypeScript project..."
 npm run build
 
+echo ">>> Writing YouTube cookies from environment variable if available..."
+if [ -n "$YOUTUBE_COOKIES" ]; then
+  echo "$YOUTUBE_COOKIES" > cookies.txt
+  echo "    cookies.txt written from YOUTUBE_COOKIES env var ($(wc -l < cookies.txt) lines)"
+else
+  echo "    YOUTUBE_COOKIES env var not set, using committed cookies.txt"
+fi
+
 echo ">>> Build completed successfully!"
