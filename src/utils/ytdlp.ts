@@ -15,12 +15,24 @@ const cookiePathAlt = path.resolve(process.cwd(), 'cookie.txt');
 
 export const runYtDlp = (args: string[], options?: YtDlpOptions): Promise<string> => {
   return new Promise((resolve, reject) => {
-    const finalArgs = [...args, '--no-warnings', '--force-ipv4'];
-    const activeCookiePath = fs.existsSync(cookiesPath) ? cookiesPath : (fs.existsSync(cookiePathAlt) ? cookiePathAlt : null);
-    
+    // Use Android VR player client to bypass YouTube bot detection on server IPs
+    const finalArgs = [
+      ...args,
+      '--no-warnings',
+      '--force-ipv4',
+      '--extractor-args', 'youtube:player_client=android_vr',
+    ];
+
+    // Append cookies as an optional enhancement if available
+    const activeCookiePath = fs.existsSync(cookiesPath)
+      ? cookiesPath
+      : fs.existsSync(cookiePathAlt)
+      ? cookiePathAlt
+      : null;
     if (activeCookiePath) {
       finalArgs.push('--cookies', activeCookiePath);
     }
+
     const process = spawn(ytDlpPath, finalArgs);
     let stdout = '';
     let stderr = '';
