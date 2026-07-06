@@ -5,7 +5,7 @@ services:
     region: oregon # Or choose another region like frankfurt, ohio, singapore
     plan: free
     buildCommand: "chmod +x render-build.sh && ./render-build.sh"
-    startCommand: "export PATH=$PATH:$(pwd) && npm start"
+    startCommand: "export PATH=$PATH:$(pwd):$(pwd)/.deno/bin && npm start"
     healthCheckPath: /
     envVars:
       - key: PORT
