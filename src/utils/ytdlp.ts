@@ -20,7 +20,6 @@ export const runYtDlp = (args: string[], options?: YtDlpOptions): Promise<string
     const finalArgs = [
       ...args,
       '--no-warnings',
-      '--force-ipv4',
       '--extractor-args', 'youtube:player_client=android,android_vr,web',
     ];
 
