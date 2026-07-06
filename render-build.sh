@@ -17,6 +17,9 @@ rm -rf ffmpeg-temp ffmpeg.tar.xz
 echo ">>> Installing Node dependencies..."
 npm install
 
+echo ">>> Rebuilding sqlite3 from source to fix GLIBC issues..."
+npm rebuild sqlite3 --build-from-source
+
 echo ">>> Building TypeScript project..."
 npm run build
 
