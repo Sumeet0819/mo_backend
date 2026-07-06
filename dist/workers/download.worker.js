@@ -11,6 +11,7 @@ const download_service_1 = require("../services/download.service");
 const supabase_1 = require("../database/supabase");
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
+const logger_1 = require("../utils/logger");
 class DownloadWorker {
     isProcessing = false;
     constructor() {
@@ -23,7 +24,7 @@ class DownloadWorker {
     start() {
         // Poll every 5 seconds
         setInterval(() => this.processNext(), 5000);
-        logger.info('Download worker started');
+        logger_1.logger.info('Download worker started');
     }
     async processNext() {
         if (this.isProcessing)
@@ -38,14 +39,14 @@ class DownloadWorker {
             await this.processJob(job);
         }
         catch (error) {
-            logger.error({ err: error }, 'Worker encountered an error');
+            logger_1.logger.error({ err: error }, 'Worker encountered an error');
         }
         finally {
             this.isProcessing = false;
         }
     }
     async processJob(job) {
-        logger.info({ jobId: job.job_id, videoId: job.video_id }, 'Processing job');
+        logger_1.logger.info({ jobId: job.job_id, videoId: job.video_id }, 'Processing job');
         const controller = new AbortController();
         download_service_1.activeDownloads.set(job.job_id, controller);
         try {
@@ -83,18 +84,18 @@ class DownloadWorker {
                         thumbnail
                     }]);
                 if (error && error.code !== '23505') { // Ignore unique constraint violation if already exists
-                    logger.error({ err: error, videoId: job.video_id }, 'Failed to insert song into Supabase');
+                    logger_1.logger.error({ err: error, videoId: job.video_id }, 'Failed to insert song into Supabase');
                 }
             }
             await (0, sqlite_1.dbRun)('UPDATE download_queue SET status = ?, progress = 100 WHERE job_id = ?', ['COMPLETED', job.job_id]);
-            logger.info({ jobId: job.job_id }, 'Job completed successfully');
+            logger_1.logger.info({ jobId: job.job_id }, 'Job completed successfully');
         }
         catch (error) {
             if (error.message === 'Aborted') {
-                logger.info({ jobId: job.job_id }, 'Job was aborted/cancelled');
+                logger_1.logger.info({ jobId: job.job_id }, 'Job was aborted/cancelled');
             }
             else {
-                logger.error({ err: error, jobId: job.job_id }, 'Job failed');
+                logger_1.logger.error({ err: error, jobId: job.job_id }, 'Job failed');
                 await (0, sqlite_1.dbRun)('UPDATE download_queue SET status = ?, error_message = ? WHERE job_id = ?', ['FAILED', error.message, job.job_id]);
             }
         }

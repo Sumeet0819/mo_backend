@@ -15,7 +15,7 @@ class SearchService {
         logger_1.logger.info({ query }, 'Search cache miss, calling yt-dlp');
         try {
             // ytsearch<N>:query
-            const stdout = await (0, ytdlp_1.runYtDlp)([`ytsearch${limit}:${query}`, '-j']);
+            const stdout = await (0, ytdlp_1.runYtDlp)([`ytsearch${limit}:${query}`, '-j', '--flat-playlist']);
             // yt-dlp -j outputs JSON lines. We need to split by newline and parse each line.
             const lines = stdout.split('\n').filter(line => line.trim().length > 0);
             const results = lines.map(line => {
@@ -25,7 +25,7 @@ class SearchService {
                     title: data.title,
                     artist: data.uploader || data.channel,
                     duration: data.duration,
-                    thumbnail: data.thumbnail
+                    thumbnail: data.thumbnail || (data.thumbnails && data.thumbnails.length > 0 ? data.thumbnails[0].url : undefined)
                 };
             });
             cache_1.searchCache.set(cacheKey, results);

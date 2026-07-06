@@ -5,14 +5,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.dbAll = exports.dbGet = exports.dbRun = exports.db = void 0;
 const sqlite3_1 = __importDefault(require("sqlite3"));
+const logger_1 = require("../utils/logger");
 const path_1 = __importDefault(require("path"));
 const dbPath = path_1.default.resolve(process.cwd(), 'queue.sqlite');
 exports.db = new sqlite3_1.default.Database(dbPath, (err) => {
     if (err) {
-        logger.error({ err }, 'Failed to connect to SQLite database');
+        logger_1.logger.error({ err }, 'Failed to connect to SQLite database');
     }
     else {
-        logger.info('Connected to SQLite database');
+        logger_1.logger.info('Connected to SQLite database');
         exports.db.run(`
       CREATE TABLE IF NOT EXISTS download_queue (
         job_id TEXT PRIMARY KEY,
