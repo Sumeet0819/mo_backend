@@ -1,5 +1,6 @@
 import { spawn } from 'child_process';
 import path from 'path';
+import fs from 'fs';
 import { logger } from "./logger";
 
 export interface YtDlpOptions {
@@ -9,10 +10,18 @@ export interface YtDlpOptions {
 
 const binaryName = process.platform === 'win32' ? 'yt-dlp.exe' : 'yt-dlp';
 const ytDlpPath = path.resolve(process.cwd(), binaryName);
+const cookiesPath = path.resolve(process.cwd(), 'cookies.txt');
+const cookiePathAlt = path.resolve(process.cwd(), 'cookie.txt');
 
 export const runYtDlp = (args: string[], options?: YtDlpOptions): Promise<string> => {
   return new Promise((resolve, reject) => {
-    const process = spawn(ytDlpPath, [...args, '--no-warnings', '--force-ipv4']);
+    const finalArgs = [...args, '--no-warnings', '--force-ipv4'];
+    const activeCookiePath = fs.existsSync(cookiesPath) ? cookiesPath : (fs.existsSync(cookiePathAlt) ? cookiePathAlt : null);
+    
+    if (activeCookiePath) {
+      finalArgs.push('--cookies', activeCookiePath);
+    }
+    const process = spawn(ytDlpPath, finalArgs);
     let stdout = '';
     let stderr = '';
 
