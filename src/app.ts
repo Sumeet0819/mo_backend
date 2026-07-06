@@ -19,6 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
+app.get('/', (req, res) => res.send('Mo Backend API is running'));
 app.use('/api/v1/health', healthRoutes);
 app.use('/api/v1/search', searchRoutes);
 app.use('/api/v1/explore', exploreRoutes);
