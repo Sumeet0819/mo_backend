@@ -14,9 +14,6 @@ mv ffmpeg-temp/ffmpeg .
 mv ffmpeg-temp/ffprobe .
 rm -rf ffmpeg-temp ffmpeg.tar.xz
 
-echo ">>> Installing Deno for yt-dlp JavaScript extraction..."
-curl -fsSL https://deno.land/install.sh | DENO_INSTALL=./.deno sh
-
 echo ">>> Installing Node dependencies..."
 npm install
 

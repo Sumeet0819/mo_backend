@@ -16,12 +16,12 @@ const cookiePathAlt = path.resolve(process.cwd(), 'cookie.txt');
 export const runYtDlp = (args: string[], options?: YtDlpOptions): Promise<string> => {
   return new Promise((resolve, reject) => {
     // Use multiple player client fallbacks to bypass YouTube bot detection on datacenter IPs.
-    // yt-dlp tries each client in order: android_vr → android → web
+    // yt-dlp tries each client in order: android → android_vr → web
     const finalArgs = [
       ...args,
       '--no-warnings',
       '--force-ipv4',
-      '--extractor-args', 'youtube:player_client=android_vr,android,web',
+      '--extractor-args', 'youtube:player_client=android,android_vr,web',
     ];
 
     // Append cookies as an optional enhancement if available
