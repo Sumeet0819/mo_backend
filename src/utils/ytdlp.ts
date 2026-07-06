@@ -12,7 +12,7 @@ const ytDlpPath = path.resolve(process.cwd(), binaryName);
 
 export const runYtDlp = (args: string[], options?: YtDlpOptions): Promise<string> => {
   return new Promise((resolve, reject) => {
-    const process = spawn(ytDlpPath, [...args, '--no-warnings']);
+    const process = spawn(ytDlpPath, [...args, '--no-warnings', '--force-ipv4']);
     let stdout = '';
     let stderr = '';
 
