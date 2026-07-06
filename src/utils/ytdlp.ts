@@ -20,6 +20,7 @@ export const runYtDlp = (args: string[], options?: YtDlpOptions): Promise<string
     const finalArgs = [
       ...args,
       '--no-warnings',
+      '--js-runtimes', 'node', // explicitly tell yt-dlp to use node.js for solving bot challenges
       '--extractor-args', 'youtube:player_client=android,android_vr,web',
     ];
 
