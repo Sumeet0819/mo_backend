@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: mo-backend
+    env: node
+    region: oregon # Or choose another region like frankfurt, ohio, singapore
+    plan: free
+    buildCommand: "chmod +x render-build.sh && ./render-build.sh"
+    startCommand: "export PATH=$PATH:$(pwd) && npm start"
+    healthCheckPath: /
+    envVars:
+      - key: PORT
+        value: "10000"
