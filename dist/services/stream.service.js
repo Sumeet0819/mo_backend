@@ -13,8 +13,16 @@ class StreamService {
         }
         logger_1.logger.info({ videoId }, 'Stream URL cache miss, calling yt-dlp');
         try {
-            // Fallback to any bestaudio or best if m4a is not available
-            const url = await (0, ytdlp_1.runYtDlp)(['-g', '-f', 'bestaudio[ext=m4a]/bestaudio/best', videoId]);
+            let url;
+            try {
+                // Fallback to any bestaudio or best if m4a is not available
+                url = await (0, ytdlp_1.runYtDlp)(['-g', '-f', 'ba/b', videoId]);
+            }
+            catch (firstError) {
+                logger_1.logger.warn({ videoId, err: firstError }, 'First extraction failed, trying without format selector');
+                // Fallback attempt without any format selector, allowing yt-dlp to pick the default available format
+                url = await (0, ytdlp_1.runYtDlp)(['-g', videoId]);
+            }
             if (!url || !url.startsWith('http')) {
                 throw new Error('Invalid URL returned from yt-dlp');
             }
