@@ -11,7 +11,7 @@ export class YoutubeService {
     logger.info(`[YoutubeService.syncPersonalFeed] Syncing feed: ${feedType}`);
     
     // Command setup
-    let cmd = `./yt-dlp --dump-json --flat-playlist`;
+    let cmd = `./yt-dlp --dump-json --flat-playlist --ignore-errors --no-abort-on-error`;
     if (cookiesPath) {
       cmd += ` --cookies ${cookiesPath}`;
     } else {

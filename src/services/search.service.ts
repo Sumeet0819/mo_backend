@@ -15,7 +15,7 @@ export class SearchService {
     logger.info({ query }, 'Search cache miss, calling yt-dlp');
     try {
       // ytsearch<N>:query
-      const stdout = await runYtDlp([`ytsearch${limit}:${query}`, '-j', '--flat-playlist']);
+      const stdout = await runYtDlp([`ytsearch${limit}:${query}`, '-j', '--flat-playlist', '--ignore-errors', '--no-abort-on-error']);
       
       // yt-dlp -j outputs JSON lines. We need to split by newline and parse each line.
       const lines = stdout.split('\n').filter(line => line.trim().length > 0);

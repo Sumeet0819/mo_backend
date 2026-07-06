@@ -13,7 +13,7 @@ class YoutubeService {
     static async syncPersonalFeed(feedType, cookiesPath) {
         logger_1.logger.info(`[YoutubeService.syncPersonalFeed] Syncing feed: ${feedType}`);
         // Command setup
-        let cmd = `./yt-dlp --dump-json --flat-playlist`;
+        let cmd = `./yt-dlp --dump-json --flat-playlist --ignore-errors --no-abort-on-error`;
         if (cookiesPath) {
             cmd += ` --cookies ${cookiesPath}`;
         }
