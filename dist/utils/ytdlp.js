@@ -14,12 +14,13 @@ const cookiesPath = path_1.default.resolve(process.cwd(), 'cookies.txt');
 const cookiePathAlt = path_1.default.resolve(process.cwd(), 'cookie.txt');
 const runYtDlp = (args, options) => {
     return new Promise((resolve, reject) => {
-        // Use Android VR player client to bypass YouTube bot detection on server IPs
+        // Use multiple player client fallbacks to bypass YouTube bot detection on datacenter IPs.
+        // yt-dlp tries each client in order: android_vr → android → web
         const finalArgs = [
             ...args,
             '--no-warnings',
             '--force-ipv4',
-            '--extractor-args', 'youtube:player_client=android_vr',
+            '--extractor-args', 'youtube:player_client=android_vr,android,web',
         ];
         // Append cookies as an optional enhancement if available
         const activeCookiePath = fs_1.default.existsSync(cookiesPath)
@@ -68,7 +69,7 @@ const runYtDlp = (args, options) => {
                 // Prevent unhandled rejection if already aborted.
                 if (options?.signal?.aborted)
                     return;
-                logger_1.logger.error({ code, stderr, args }, 'yt-dlp execution failed');
+                logger_1.logger.error({ code, stderr, finalArgs }, 'yt-dlp execution failed');
                 reject(new Error(`yt-dlp failed with code ${code}: ${stderr}`));
             }
         });
