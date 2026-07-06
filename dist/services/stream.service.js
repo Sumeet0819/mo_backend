@@ -15,8 +15,8 @@ class StreamService {
         try {
             let url;
             try {
-                // Fallback to any bestaudio or best if m4a is not available
-                url = await (0, ytdlp_1.runYtDlp)(['-g', '-f', 'ba/b', videoId]);
+                // Strict format selector for iOS compatibility (m4a/mp4 only)
+                url = await (0, ytdlp_1.runYtDlp)(['-g', '-f', 'bestaudio[ext=m4a]/m4a/best[ext=mp4]/best', videoId]);
             }
             catch (firstError) {
                 logger_1.logger.warn({ videoId, err: firstError }, 'First extraction failed, trying without format selector');
